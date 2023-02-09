@@ -1,0 +1,4 @@
+﻿  test.c
+D:\项目\VSWJ\ss\test-2023-2-6\test-2023-2-6\test.c(49,12): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+D:\项目\VSWJ\ss\test-2023-2-6\test-2023-2-6\test.c(58,12): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  test-2023-2-6.vcxproj -> D:\项目\VSWJ\ss\test-2023-2-6\x64\Debug\test-2023-2-6.exe

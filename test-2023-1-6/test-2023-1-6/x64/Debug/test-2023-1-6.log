@@ -1,0 +1,18 @@
+﻿  test.c
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(13,9): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“size_t”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(13,9): message : 请考虑在格式字符串中使用“%zd”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(14,9): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“size_t”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(14,9): message : 请考虑在格式字符串中使用“%zd”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(16,9): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“size_t”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(16,9): message : 请考虑在格式字符串中使用“%zd”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(17,9): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“size_t”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(17,9): message : 请考虑在格式字符串中使用“%zd”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(19,9): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“size_t”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(19,9): message : 请考虑在格式字符串中使用“%zd”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(20,9): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“size_t”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(20,9): message : 请考虑在格式字符串中使用“%zd”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(22,9): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“size_t”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(22,9): message : 请考虑在格式字符串中使用“%zd”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(23,9): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“size_t”
+D:\项目\VSWJ\ss\test-2023-1-6\test-2023-1-6\test.c(23,9): message : 请考虑在格式字符串中使用“%zd”
+  test-2023-1-6.vcxproj -> D:\项目\VSWJ\ss\test-2023-1-6\x64\Debug\test-2023-1-6.exe

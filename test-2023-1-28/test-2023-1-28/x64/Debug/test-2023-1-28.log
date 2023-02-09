@@ -1,0 +1,4 @@
+﻿  test.c
+D:\项目\VSWJ\ss\test-2023-1-28\test-2023-1-28\test.c(79,9): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“int (__cdecl *)(int,int)”
+D:\项目\VSWJ\ss\test-2023-1-28\test-2023-1-28\test.c(79,9): warning C4313: "printf": 格式字符串中的 "%d" 与类型为 "int (__cdecl *)(int,int)" 的参数 1 冲突
+  test-2023-1-28.vcxproj -> D:\项目\VSWJ\ss\test-2023-1-28\x64\Debug\test-2023-1-28.exe

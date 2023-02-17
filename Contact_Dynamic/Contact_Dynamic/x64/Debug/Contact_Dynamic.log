@@ -1,0 +1,4 @@
+﻿  contact.c
+D:\项目\VSWJ\ss\Contact_Dynamic\Contact_Dynamic\contact.h(1,1): warning C4828: 文件包含在偏移 0x460 处开始的字符，该字符在当前源字符集中无效(代码页 936)。
+D:\项目\VSWJ\ss\Contact_Dynamic\Contact_Dynamic\contact.c(9,11): warning C4098: “InitContact”:“void”函数返回值
+  Contact_Dynamic.vcxproj -> D:\项目\VSWJ\ss\Contact_Dynamic\x64\Debug\Contact_Dynamic.exe

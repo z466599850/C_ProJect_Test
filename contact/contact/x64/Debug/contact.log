@@ -1,0 +1,6 @@
+﻿  contact.c
+D:\项目\VSWJ\ss\contact\contact\contact.h(1,1): warning C4828: 文件包含在偏移 0x3f3 处开始的字符，该字符在当前源字符集中无效(代码页 936)。
+  test.c
+D:\项目\VSWJ\ss\contact\contact\contact.h(1,1): warning C4828: 文件包含在偏移 0x3f3 处开始的字符，该字符在当前源字符集中无效(代码页 936)。
+  正在生成代码...
+  contact.vcxproj -> D:\项目\VSWJ\ss\contact\x64\Debug\contact.exe

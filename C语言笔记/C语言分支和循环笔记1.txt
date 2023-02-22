@@ -1,0 +1,528 @@
+·分支和循环语句！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+
+分支语句
+·if
+·switch
+
+循环语句
+·while
+·for
+·do while
+
+goto语句
+
+什么是语句？
+C语言中由一个英文分号;隔开的就是一条语句。比如：
+ printf("hehe");
+ 1+2;
+ 补充：
+ int main()
+{
+	int a = 10;
+	;//是语句-空语句
+	return 0;
+}
+
+if语句
+那if语句的语法结构是怎么样的呢？
+
+语法结构：
+  if(表达式)
+      语句;
+ 例子：
+    int a=19;
+    if (age < 19)
+	printf("未成年\n");
+
+
+
+
+  if(表达式)
+       语句1;
+  else
+       语句2;
+  例子：
+    int age=17;
+    if (age < 18)
+	printf("未成年\n");
+	else
+	printf("成年\n");
+
+
+
+   //多分支
+   if(表达式1)
+       语句1;
+   else if(表达式2)
+       语句2;
+    else 
+       语句3;
+    例子：
+    int age = 100;
+	if (age < 18)
+		printf("未成年\n");
+	else if (age >= 18 && age < 28)
+		printf("青年\n");
+	else if (age >= 28 && age < 50)
+		printf("壮年\n");
+	else if (age >= 50 && age < 90)
+		printf("老年");
+	else
+		printf("长生不老");
+
+
+在C语言中如何表示真假？
+    0表示假，非0表示真。
+
+    代码块 {}                                           
+    int main()
+    {
+        if(表达式)
+        {
+            语句列表1;
+        }
+        else
+        {
+            语句列表2;
+        }
+        return 0;
+    }
+    这里的一对{ }就是一个代码块
+
+    例如：
+    int main()
+{
+	int age = 10;
+	if (age < 18)
+	{
+		printf("未成年\n");
+		printf("不能谈恋爱\n");
+	}
+	else
+	{
+	 if (age >= 18 && age < 28)
+		printf("青年\n");
+	else if (age >= 28 && age < 50)
+		printf("壮年\n");
+	else if (age >= 50 && age < 90)
+		printf("老年");
+	else
+		printf("长生不老");
+	}
+
+
+
+悬空else：
+int main()
+{
+	int a = 0;
+	int b = 2;
+	if (a == 1)
+		if (b == 2)
+	        printf("hehe\n");
+	else
+			printf("haha\n");    //代码风格很重要  else和离着最近的if的进行匹配
+	return 0;
+}
+
+选中段落 tab右移 shift+tab 左移
+
+
+
+
+switch语句
+
+switch语句也是一种分支语句。常常用于多分支的情况
+
+switch(整型 常量 表达式)
+{
+	语句项;
+}
+
+而语句项是什么呢？
+
+//是一些case语句
+//如下：
+   case 整型 常量 表达式
+     语句;
+
+例如：
+int main()
+{
+	int day = 0;
+	scanf("%d", &day);////因为day一开始是0，scanf是键盘输入函数，
+	                												 //取地址之后可以在地址内 存入键盘输入值，然后再判断输出内容
+	switch (day)
+	{
+	case 1://case 决定入口
+		printf("星期一\n");
+		break;//break 决定出口
+	case 2:
+		printf("星期二\n");
+		break;
+	case 3:
+		printf("星期三\n");
+		break;
+	case 4:
+		printf("星期四\n");
+		break;
+	case 5:
+		printf("星期五\n");
+	case 6:
+		break;
+		printf("星期六\n");
+	case 7:
+		printf("星期天\n");
+		break;
+	default: //输入case以外的数字就显示输入错误
+		printf("输入错误\n");
+	}
+
+	return 0;
+}
+
+default:
+写在任何一个case标签可以出现的位置
+当switch表达式的值并不匹配所有case标签的值时，这个default子句后面的语句就会执行。
+所以，每个switch语句中只能出现一条default子句
+但是它可以出现在语句列表的任何位置，而且语句流会像贯穿一个case标签一样贯穿default子句
+
+
+第二种写法：
+
+int main()
+{
+	int day = 0;
+	scanf("%d", &day);
+	switch (day)
+	{
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+		printf("工作日\n");
+		break;
+	case 6:
+	case 7:
+		printf("休息日\n");
+		break;
+	default:
+		printf("输入错误\n");
+		break;
+	}
+	return 0;
+}
+
+******编程好习惯******
+>在每个switch语句中都放一条default子句是个好习惯，甚至可以在后边在加一个break
+
+
+while循环
+我们已经找我了,if语句:
+if(条件)
+   语句;
+
+当条件满足的情况下，if语句后的语句执行，否则不执行。但是这个语句只会执行一次。
+但是我们发现生活中很多的实际的例子是:同一件事情我们需要完成很多次
+那我们怎么做呢?C语言中给我们引入了 : while语句，可以实现循环。
+
+
+//while 语法结构：
+while(表达式)
+      循环语句：
+	  例如：
+int main()
+{
+	while (1)
+		printf("hehe\n");
+	return 0;
+}
+
+
+加强版：
+int main()
+{
+	int i = 0;
+	while (i <= 10)
+	{
+		if (i == 5)
+		break;
+		printf("%d ", i);
+		i++;
+;
+	}
+	return 0;
+}
+//执行结果为 0 1 2 3 4
+
+
+总结:break在while循环中的作用:
+其实在循环中只要遇到break，就停止后期的所有的循环，直接终止循环。 所以: while中的
+break是用于永久终止循环的。
+
+
+int main()
+{
+	int i = 0;
+	while (i <= 10)
+	{
+		if (i == 5)
+		continue;
+		printf("%d ", i);
+		i++;
+	}
+	return 0;
+}
+//执行结果 0 1 2 3 4
+
+总结: continue在while循环中的作用就是:
+continue是用于终止本次循环的，也就是本次循环中continue后边的代码不会再执行，而是直接
+跳转到while语句的判断部分。进行下一次循环的入口判断。
+
+
+
+/*int main()
+{
+	int ch = 0;
+	//EOF - end of file 文件结束标志
+	while ((ch = getchar()) != EOF)//getchar 输入
+	{
+		putchar(ch);//putchar 输出
+	}
+	return 0;
+}*/
+
+
+
+
+int main()
+{
+	int ch = 0;
+	int ret = 0;
+	char password[20] = { 0 };
+	printf("请输入密码：");//输入密码，并存放在password数组中
+	scanf("%s",password);
+	while ((ch = getchar()) !='\n')//注意不加getchar后面的括号会先执行！=，加了括号就先执行括号里的过
+	{
+		;
+	}
+	printf("请确认(Y/N)：");
+	ret = getchar();
+	printf("确认成功");
+	if (ret == 'Y')
+	{
+		printf("确认成功");
+	}
+	else
+	{
+		printf("放弃确认");
+	}
+
+
+}
+
+int main()
+{
+	int ch = 0;
+	while ((ch = getchar()) != EOF)
+	{
+		if (ch < '0' || ch>'9')// ||或者的意思        //这组有问题 稍后解答
+		    continue;//后面不运用
+		putchar(ch);
+	}
+	return 0;
+}
+
+
+
+
+for循环
+
+我们已经知道了while循环，但是我们为什么还要一个for循环呢 ? 首先来看看for循环的语法:
+
+    语法
+
+
+    for(表达式1:表达式2:表达式3)
+	   循环语句:
+
+
+	   表达式1 表达式1为初始化部分，用于初始化循环变量的。
+	   表达式2 表达式2为条件判断部分，用于判断循环时候终止。
+	   表达式3 表达式3为调整部分，用于循环条件的调整。
+	   例如：
+int main()
+{
+	int i = 0;
+	//  初始化    判断   调整
+	for (i = 1; i <= 10; i++)
+	{
+		printf("%d ", i);
+	}
+	return 0;
+}
+
+
+for语句的循环控制变量
+
+一些建议 :
+
+1.不可在for 循环体内修改循环变量，防止for 循环失去控制
+2.建议for语句的循环控制变量的取值采用“前闭后开区间”写法
+
+例如：
+int main()
+{
+	int arr[10] = { 1,2,3,4,5,6,7,8,9,10 };
+	//数组是从0开始 0 1 2 3 4 5 6 7 8 9 这些称为下标
+	int i = 0;
+	//10 次循环
+	//10次打印
+	//10个元素
+	for (i = 0; i < 10; i++)
+	{
+		printf("%d ", arr[i]);
+		//0-9都小于10 所以一起打印了 9对应的是10
+	}
+	return 0;
+}
+
+变种1
+int main()                                   1. for循环的初始化、判断、调整 都可以省略
+{                                             但是:
+	int i = 0;                                for循环的额 判断部分 如果被省略，那判断条件就是:恒为正
+	for (;;)                                 2.如果不是非常款练，建议大家不要随便省略
+	{                                        补充： 就像下面那个升级版 如果不在内循环的for中写j=0 那么就会打印10个
+		printf("hehe\n");                           写了j=0 就打印100个  不写会造成循环终止
+	}
+	return 0;
+}
+
+
+升级版
+int main()
+{
+	int i = 0;
+	int j = 0;
+	for (i = 0; i < 10; i++)
+		//外层循环一次，内层for循环全部执行完成再进行外层的一次循环；
+	{
+		for (j = 0; j < 10; j++)
+		{
+			printf("%d\n",i,j);
+		}
+	}
+	return 0;
+}
+// 从外循环进去到内循环 外循环i==0 i<10 条件成立进到 内循环 然后j ==0 小于<10 开始循环 0 1 2 3 4 5 6 7 8 9 这是第一遍循环
+// 然后出去 在进入到外循环 i++ 0+1等于1 条件成立在进入到内循环 开始循环 这个时候 j是等于0 的 输出 0 1 2 3 4 5 6 7 8 9 
+
+变种2
+int main()
+{
+	int x, y;
+	for (x = 0, y = 0; x < 2 && y < 5; x++, y++)
+		//&&并且的意思  要同时满足这两个条件才能循环 否则只要一个不成立那么循环就结束
+	{
+		printf("hehe\n");
+	}
+	return 0;
+}
+
+
+练习：一道笔试题：
+int main()
+{
+	int i = 0;
+	int k = 0;
+	for (i = 0, k = 0; k = 0; k++, i++)
+		//进不去循环 因为判断 k=0  0为假  为假了还循环干什么 所以循环零次
+	{
+		k++;
+	}
+	return 0;
+}
+如果判断是 == 0 就会执行 一次 
+因为非0就表示永远为真命题，就鬼一直执行
+==的性质和<=一样都是相同类型的操作符，用于判断而=是直接给赋值
+
+
+do...while()循环
+
+do语句的语法：
+
+ do
+      循环语句;
+ while(表达式);
+ 升级版理解
+ do语句的语法：
+
+ do
+      调整;
+ while(判断);
+
+do while 的好处就是，无论结果怎么样，最少执行一次！ 先执行一次，然后如果为真在执行 如果为假就不执行了
+
+do while就是先循环在判断，for就是先判断再循环
+
+int main()
+{
+	int i = 0;
+	do
+	{
+		if (i == 5)
+			break;
+		//break 输出的是0 1 2 3 4
+		//continue 输出的是 0 1 2 3 4 死循环
+		printf("%d ",i);
+		i++;
+	} while (i <= 10);
+}
+
+
+除了这些呢 还有一个是
+
+goto语句
+C语言中提供了可以随意滥用的 goto语句和标记跳转的标号
+从理论上goto语句是没有必要的，实践中没有goto语句也可以很容易的写出代码
+
+但是某些场合下goto语句还是用得着的，最常见的用法就是终止程序在某些深度嵌套的结构的处理过
+程，例如一次跳出两层或多层循环。
+
+这种情况使用break是达不到目的的。它只能从最内层循环退出到上一层的循环。
+
+goto语句的例子：
+
+int main()
+{
+	printf("hello bit\n");
+	goto again;
+	printf("你好\n");
+again:
+	printf("hehe\n");//这样写显示的是 hello bit 和 hehe  goto语句其实就相当于跳转
+}
+
+
+goto语言真正适合的场景如下：
+
+/*int main()
+{
+	for (;;)
+	{
+		for (;;)
+		{
+			for (;;)
+			{
+				if (disaster)
+				{
+					goto error;
+				}
+
+			}
+		}
+	}
+error:
+	if(disastrer) //这样写呢 利用goto 直接就跳到eooro这里来了 不用goto就得用break跳3次才能跳出来
+	return 0;
+}*/

@@ -1,0 +1,683 @@
+函数
+
+库函数
+学习库函数的网址 www.cplusplus.com
+
+简单的总结,C语言常用的库函数都有:
+  ·IO函数 //输入输出函数的意思 有 stdio函数 字符串操作函数 都是IO函数里面的
+  ·字符串操作函数
+  ·字符操作函数 //把大写字母改成小写字母 小写字母改成大写字母
+  ·内存操作函数
+  ·时间/日期函数
+  ·数学函数
+  ·其他库函数
+
+  我们参照文档，学习几个库函数:(教会学生怎么使用文档来学习库函数)。
+  
+  strcpy函数 strcpy - string copy - 字符串拷贝  复制字符串
+    将源指向的 C 字符串复制到目标指向的数组中，包括终止的 null 字符（并在该点停止）。
+    为避免溢出，目标指向的数组的大小应足够长，以包含与源相同的 C 字符串（包括终止空字符），并且不应在内存中与源重叠。
+    拷贝过去的将被覆盖 例如 strcpy (arr1,arr2); 假如我arr1目的地有内容，将arr2拷贝arr1里面 arr1里面的内容将被arr2覆盖 
+
+例如：
+#include <stdio.h>
+#include <string.h>
+
+int main ()
+{
+  char str1[]="Sample string";
+  char str2[40];
+  char str3[40];
+  strcpy (str2,str1);
+  strcpy (str3,"copy successful");
+  printf ("str1: %s\nstr2: %s\nstr3: %s\n",str1,str2,str3);
+  return 0;
+}
+
+输出：
+str1: Sample string
+str2: Sample string
+str3: copy successfu
+
+
+用法 strcmp (目的地，源头) 就是把源头复制到目的地
+     strcmp (目的地，文字) 也可以把文字复制到目的地 
+
+memset函数：
+
+//memset memory - 内存 set -设置
+int main()
+{
+	char arr[] = "hello word";//"里面的是字符串"
+	memset(arr, 'z', 5);//指定存入字符串的内存，改变前num个值 字符单引号，字符串双引号 'z'是字符 "hello"是字符串
+	printf("arr:%s", arr);//覆盖的是前面的数
+	return 0;
+}
+void * memset ( void * ptr, int value, size_t num );
+ 另外：这个之前在switch case语句的时候讲过 char存的是ASC码值，也是int
+用法：
+   memset(需要填充的,值,数字  )
+
+
+
+
+注:但是库函数必须知道的一个秘密就是: 使用库函数，必须包含 #include 对应的头文件
+这里对照文档来学习上面几个库函数，目的是掌握库函数的使用方法。
+
+需要全部记住吗 ?No 需要学会查询工具的使用
+
+www.cplusplus.com
+http://en.cppreference.com 英文版 
+http://zh.cppreference.com 中文版
+英文很重要。最起码得看懂文章
+
+
+
+自定义函数：
+
+1.如果库函数能干所有的事情，那还要程序员干什么 ?
+2.所有更加重要的是自定义函数
+3.自定义函数和库函数一样，有函数名，返回值类型和函数参数。但是不一样的是这些都是我们自己来设
+计。这给程序员一个很大的发挥空间。
+
+
+函数的组成:
+  ret_type fun_name(paral，*)
+  {
+    statement;//语句项
+  }
+ret_type 返回类型
+fun_name 函数名
+parral   函数参数
+
+ 例如：
+//判断两个数的最大值
+/*int get_max(int x, int y)
+{
+	if (x > y)
+	{
+		return x;
+	}
+	else
+	{
+		return y;
+	}
+}
+
+int main()
+{
+	int a = 10;
+	int b = 20;
+	//函数的使用
+	int max = get_max(a, b);
+	printf("max = %d\n",max);
+	max = get_max(100,300+1);//300+1是表达式
+	max = get_max(100,get_max(3,7));//函数
+	printf("max = %d", max);
+	return 0;
+}*/
+
+
+
+//利用三目运算符判断两个数的最大值
+/*int get_max(int x, int y)
+{
+	return (x > y) ? (x) : (y);
+}
+
+int main()
+{
+	int a = 10;
+	int b = 20;
+	int max = get_max(a, b);
+	printf("max = %d", max);
+	return 0;
+}*/
+
+
+//利用函数将两个数进行交换
+void Swap(int* pa, int* pb)//指针变量 
+{
+	int tmp = 0;
+	tmp = *pa;
+	*pa = *pb;
+	*pb = tmp;
+}
+
+
+int main()
+{
+	int a = 10;
+	int b = 20;
+	printf("a= %d b = %d", a, b);
+	Swap(&a, &b);//Swap是交换的意思 自定义函数()  // &a 的值给到了 int* pa // &b 的值给到了 int* pb
+	return 0;
+}
+
+
+
+//利用函数将两个数进行交换
+//总结：这种写法只是表面交换了实际并没有交换因为 x，y和a，b不在一个地址
+//
+//当实参传给形参的时候
+//形参其实是实参的一份临时拷贝
+//对形参的修改是不会改变实参的
+//
+void Swap1(int x, int y)//int x ,int y,放的是形式参数
+{
+	int tmp = 0;
+	tmp = x;
+	x = y;
+	y = tmp;
+}
+
+
+int main()
+{
+	int a = 10;
+	int b = 20;
+	printf("a = %d b = %d\n", a, b);
+	Swap1(a, b);
+	printf("a = %d b = %d\n", a, b);
+}
+
+//利用函数将两个数进行交换 Swap2 
+void Swap2(int* pa, int* pb)//指针变量 
+{
+	int tmp = 0;
+	tmp = *pa;
+	*pa = *pb;
+	*pb = tmp;
+}
+
+
+int main()
+{
+	int a = 10;
+	int b = 20;
+	printf("a= %d b = %d\n", a, b);
+	Swap2(&a, &b);//Swap是交换的意思 自定义函数()  // &a 的值给到了 int* pa // &b 的值给到了 int* pb
+	printf("a = %d b = %d", a, b);
+	return 0;
+}
+
+函数的参数
+
+
+实际参数( 实参) :
+    1.真实传给函数的参数，叫实参。实参可以是:常量、变量、表达式、函数等。无论实参是何种类
+	型的量，在进行函数调用时，它们都必须有确定的值，以便把这些值传送给形参。
+
+形式参数(形参):
+    1.形式参数是指函数名后括号中的变量，因为形式参数只有在函数被调用的过程中才实例化(分配内存单元)，
+	所以叫形式参数。形式参数当函数调用完成之后就自动销毁了。因此形式参数只在函数中有效。
+
+1.上面Swap1和Swap2函数中的参数x，y，px，py 都是形式参数。在main函数中传给Swap1的num1
+num2和传给Swap2函数的&num1，&num2是实际参数
+
+
+总结：结合Swap1，Swap2 这里可以看到Swap1函数在调用的时候，X，y拥有自己的空间，同时拥有了和实参一模一样的内容。所
+以我们可以简单的认为:形参实例化之后其实相当于实参的一份临时拷贝
+
+
+
+函数的调用 :
+ 
+ 传值调用
+    1.函数的形参和实参分别占有不同内存块，对形参的修改不会影响实参
+
+ 传址调用
+    1.传址调用是把函数外部创建变量的内存地址传递给函数参数的一种调用函数的方式。
+    2.这种传参方式可以让函数和函数外边的变量建立起正真的联系，也就是函数内部可以直接操
+    作函数外部的变量。
+
+练习：
+  1.写一个函数可以判断一个数是不是素数
+  2.写一个函数判断一年是不是闺年。
+  3.写一个函数，实现一个整形有序数组的二分查找。
+  4.写一个函数，每调用一次这个函数，就会将num的值增加1。
+
+//写一个函数可以判断一个数是不是素数
+int is_prime(int a)
+{
+	int j = 0;
+	for (j = 2; j < a; j++)
+	{
+		if (a % j == 0)
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+
+int main()
+{
+	int i = 0;
+	for (i = 100; i <= 200; i++)
+	{
+		if (is_prime(i) == 1)
+			printf("%d ", i);
+	}
+	return 0;
+}
+
+
+优化版
+//写一个函数可以判断一个数是不是素数
+int is_prime(int a)
+{
+	int j = 0;
+	for (j = 2; j <=sqrt(a); j++)//sqrt 开根号的意思 头文件是math.h
+	{
+		if (a % j == 0)
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+
+int main()
+{
+	int i = 0;
+	for (i = 100; i <= 200; i++)
+	{
+		if (is_prime(i) == 1)//is_prime 判断是不是素数
+			printf("%d ", i);
+	}
+	return 0;
+}
+
+
+//.写一个函数判断一年是不是闺年。
+int is_leap_year(int y)
+{
+	if ((y % 4 == 0 && y % 100 != 0) || (y % 400 == 0))
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+
+}
+
+int main()
+{
+	int year = 0;
+	for (year = 1000; year <= 2000; year++)
+	{
+		if (is_leap_year(year) == 1)//is_leap_year 是不是闰年的意思
+		{
+			printf("%d ", year);
+		}
+	}
+	return 0;
+}
+
+
+
+
+//3.写一个函数，实现一个整形有序数组的二分查找。
+int binary_serch(int arr[], int k,int sz)
+{
+
+	int min = 0;
+	int max = sz - 1;
+	while (min <= max)
+	{
+		int mid = (min + max)/2;
+		if (arr[mid]< k )
+		{
+			min = mid + 1;
+		}
+		else if (arr[mid] > k)
+		{
+			max = mid - 1;
+		}
+		else
+		{
+			return mid;
+		}
+	}
+	return -1;
+
+}
+
+
+int main()
+{
+	int arr[] = { 1,2,3,4,5,6,7,8,9,10 };
+	int k = 7;
+	int sz = sizeof(arr) / sizeof(arr[0]);
+	int ret = binary_serch(arr, k,sz);
+	if (ret == -1)
+	{
+		printf("找不到指定的数字");
+	}
+	else
+	{
+		printf("找到了，下标是%d",ret);
+	}
+	return 0;
+}
+
+
+
+
+
+//.写一个函数，每调用一次这个函数，就会将num的值增加1。
+void Add(int* p)
+{
+	(*p)++;
+}
+
+int main()
+{
+	int num = 0;
+	Add(&num);
+	printf("num = %d\n",num);
+	Add(&num);
+	printf("num = %d\n",num);
+	Add(&num);
+	printf("num = %d\n",num);
+	return 0;
+}
+
+
+
+
+函数的嵌套调用和链式访问
+
+函数和函数之间可以有机的组合的
+
+嵌套调用
+#include <stdio.h>
+
+void new_line()
+{
+	printf("hehe n");
+}
+
+void three_line()
+{
+	int i = 0;
+    for(i=0; i<3; i++)
+	{
+    new_line();
+	}
+}
+
+int main()
+{
+    three_line();
+    return 0;
+}
+
+
+链式访问
+
+把一个函数的返回值作为另外一个函数的参数
+
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+    //char arr[20] ="he11o";
+	//int ret = strlen(strcat(arr,"bit"));//这里介绍一下strlen函数
+	//printf("%d\n",ret)
+	printf("%d",strlen("abc"));
+
+}
+
+
+
+int main()
+{
+	printf("%d", printf("%d", printf("%d", 43)));
+		//请问他的结果是什么 43  2  1
+	//为什么呢 因为printf返回的是他字符的个数
+	//先从43这边打印 然后43有两个数字 第二个printf打印2 然后第一个printf打印1
+	return 0;
+}
+
+
+函数的声明和定义
+
+函数声明:
+    1.告诉编译器有一个函数叫什么，参数是什么，返回类型是什么。但是具体是不是存在，无关
+	紧要。
+	2.函数的声明一般出现在函数的使用之前。要满足先声明后使用。
+	3.函数的声明一般要放在头文件中的。
+函数定义 :
+函数的定义是指函数的具体实现，交待函数的功能实现。
+
+
+//函数声明
+/*int Add(int x, int y);*/ //放到头文件里面
+
+#include "add.h"//库函数<>，自己函数“”  //想用的话用这个就行
+//.c是你写的代码，.h是你的函数声明
+
+int main()
+{
+	int a = 10;
+	int b = 20;
+	int sum = Add(a, b);
+	//函数调用
+	printf("%d", sum);
+	return 0;
+}
+
+//函数的定义
+/*int Add(int x, int y)//放到源文件里面
+{
+	int z = x + y;
+	return z;
+}*/
+
+
+递归
+
+
+
+
+
+
+
+
+
+
+
+
+函数递归
+
+什么是递归?
+  程序调用自身的编程技巧称为递归(recursion)。递归做为一种算法在程序设计语言中广泛应用。
+  一个过程或函数在其定义或说明中有直接或间接调用自身的一种方法，它通常把一个大型复杂的
+  问题层层转化为一个与原问题相似的规模较小的问题来求解，递归策略只需少量的程序就可描述
+  出解题过程所需爱的多次重复计算，大大地减少了程序的代码量。递归的主要思考方式在于:把
+  大事化小
+
+递归的两个必要条件
+  1.存在限制条件，当满足这个限制条件的时候，递归便不再继续
+  2.每次递归调用之后越来越接近这个限制条件。
+
+
+练习1 :( 画图讲解 )
+  接受一个整型值(无符号)，按照顺序打印它的每一位。例如: 输入:1234，输出1 2 3 4.
+
+
+/*void print(int n)
+{
+	if (n > 9)
+	{
+		print(n / 10);
+	}
+	printf("%d ", n%10);
+}
+
+int main()
+{
+	unsigned int num = 0;
+	scanf("%d", &num);
+	print(num);
+	return 0;
+}*/
+
+
+
+
+练习2 :( 画图讲解)
+  编写函数不允许创建临时变量，求字符串的长度
+
+
+
+/*int mad_strlen(char* str)
+{
+	int count = 0;
+	while ((*str)!='\0')
+	{
+		count++;
+		str++;
+	}
+	return count;
+}*/
+
+int mad_strlen(char* str)
+{
+	if (*str != '\0')
+	{
+		return 1 + mad_strlen(str + 1);
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+int main()
+{
+	char arr[] = "but";
+	//int len = strlen(arr);//求字符串长度
+	//printf("%d\n",len);
+
+	//模拟实现了一个strlen函数
+	int len = mad_strlen(arr);//arr是数组，数组传参，传过去的不是整个数组，而是第一个元素的地址
+	printf("len = %d ", len);
+	return 0;
+}
+
+
+
+练习3:
+    求n的阶乘。(不考虑溢出)
+
+
+/*int jc1(int n)//循环的方法
+{
+	//1*2*3*4*5
+	int ou = 1;
+	int i = 0;
+	for (i = 1; i <= n; i++)
+	{
+		ou *= i;
+	}
+	return ou;
+}*/
+
+
+int jc2(int n)//递归的方法
+{
+	if (n <= 1)
+	{
+		return 1;
+	}
+	else
+	{
+	    return n * jc2(n - 1);
+	}
+}
+
+int main()
+{
+	int a = 0;
+	int ret = 0;
+	scanf("%d", &a);
+	ret = jc2(a);
+	printf("%d\n", ret);
+	return 0;
+}
+
+
+
+
+
+
+
+练习4
+求第n个斐波那契数。(不考虑溢出)
+
+// 1 1 2 3 5 8 13 21 34 55 ....
+//描述第n个斐波那契的数
+/*int count = 0;
+int Fib(int n)
+{
+	if (n == 3)//测试第3个斐波那契数的使用次数
+	{
+		count++;
+	}
+	if (n <= 2)
+	{
+		return 1;
+	}
+	else
+	{
+		return Fib(n - 1) + Fib(n - 2);
+	}
+
+}*/
+
+int Fib(int n)//利用循环方式才正确
+{
+	int a = 1;
+	int b = 1;
+	int c = 1;
+	while (n > 2)
+	{
+		c = a + b;
+		a = b;
+		b = c;
+		n--;
+	}
+	return c;
+}
+
+int main()
+{
+	int n = 0;
+	int ret = 0;
+	scanf("%d", &n);
+	//TDD - 测试驱动开发
+	ret = Fib(n);
+	printf("ret = %d\n", ret);
+	return 0;
+}
+
+  但是我们发现有问题，
+  1.在使用 fib 这个函数的时候如果我们要计算第50个斐波那契数字的时候特别耗费时间。
+  2.使用 factoria1函数求10000的阶乘(不考虑结果的正确性)，程序会崩溃
+
+为什么呢?
+
+  ·我们发现 fib 函数在调用的过程中很多计算其实在一直重复。 如果我们把代码修改一下 就是循环的方式
+
+
+
+
+  函数递归的几个经典题目(自主研究 ) :
+
+    1.汉诺问题
+    2.青蛙跳台阶问题

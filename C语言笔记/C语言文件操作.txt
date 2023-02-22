@@ -1,0 +1,803 @@
+C语言文件操作
+    · 什么是文件
+    · 文件名
+    · 文件类型
+    · 文件缓冲区
+    · 文件指针
+    · 文件的打开和关闭
+    · 文件的顺序读写
+    · 文件的随机读写
+    · 文件结束的判定
+
+
+什么是文件
+
+    磁盘上的文件是文件。
+
+    但是在程序设计中，我们一般谈的文件有两种:程序文件、数据文件
+    程序文件去处理数据文件 可以读也可以写
+
+    程序文件
+        包括源程序文件(后缀为.c),目标文件( windows环境后缀为.obi),可执行程序(windows环境后缀
+        为.exe)。
+    数据文件
+        文件的内容不一定是程序，而是程序运行时读写的数据，比如程序运行需要从中读取数据的文件，或者输出内
+        容的文件。
+    本章讨论的是数据文件。
+
+    在以前各章所处理数据的输入输出都是以终端为对象的，即从终端的键盘输入数据，运行结果显示到显示器上
+
+    其实有时候我们会把信息输出到磁盘上，当需要的时候再从磁盘上把数据读取到内存中使用，这里处理的就是磁盘上
+    文件。
+
+文件名
+    一个文件要有一个唯一的文件标识，以便用户识别和引用
+
+    文件名包含3部分: 文件路径+文件名主干+文件后缀
+
+    例如:c:\code\ test.txt
+
+    为了方便起见，文件标识常被称为文件名。
+
+
+
+文件类型
+    根据数据的组织形式，数据文件被称为文本文件或者二进制文件
+    
+    文本文件：用记事本打开看得懂的文件
+    二进制文件：用记事本打开看不懂的文件
+
+    数据在内存中以二进制的形式存储，如果不加转换的输出到外存，就是二进制文件
+
+    如果要求在外存上以ASCI码的形式存储，则需要在存储前转换。以ASCI字符的形式存储的文件就是文本文件
+
+    一个数据在内存中是怎么存储的呢?
+
+    字符一律以ASCI形式存储，数值型数据既可以用ASCI形式存储，也可以使用二进制形式存储.
+
+    如有整数10000，如果以ASCI码的形式输出到磁盘，则磁盘中占用5个字节(每个字符一个字节，而二进制形式输
+    出，则在磁盘上只占4个字节(VS2013测试)。
+        00000000    [10 27 00 00 16进制形式显示的]
+                                                                
+        00000000 00000000 00100111 00010000     [ASCII形式 00110001 00110001 00110001 00110001 00110001]      [00000000 00000000 00100111  00010000]
+        内存中的存储形式                                     (1)      (0)       (0)     (0)       (0)                   [二进制形式存储]
+        10000(十进制) 的二进制存储                             [就是1 0 0 0 0 的ASCII码值]
+
+        测试代码：
+            int main()
+            {
+                int a = 10000;
+                FILE* pf = fopen("test.txt","wb");//fopen 打开文件 fopen("文件","wb") wb 叫以二进制的形式写 二进制的形式写到文件中
+                        //如果写着写着文件不存在的时候，fopne会创建文件
+                        //FILE该类主要用于文件和目录的创建、文件的查找和文件的删除等。
+
+                fwrite(&a, 4,1,pf);//fwrite 叫写文件 写一个4个字节的数据进去 放到pf这个文件里去
+                            //fwrite(写什么东西进去呢，写几个字节呢,写几个这样的数据，放到哪里去呢)
+
+                fclose(pf);//fclose 关闭这个文件
+                pf = NULL;//关闭之后赋给空指针
+                return 0;
+            }
+
+
+
+
+        文件缓冲区
+            ANSIC 标准采用“缓冲文件系统”处理的数据文件的，所谓缓冲文件系统是指系统自动地在内存中为程序中每一个正在
+            使用的文件开辟一块“文件缓冲区”。从内存向磁盘输出数据会先送到内存中的缓冲区，装满缓冲区后才一起送到磁盘
+            上。如果从磁盘向计算机读入数据，则从磁盘文件中读取数据输入到内存缓冲区(充满缓冲区)，然后再从缓冲区逐
+            个地将数据送到程序数据区(程序变量等)。缓冲区的大小根据C编译系统决定的。
+
+            |                              输出缓存区
+            |                                           输出
+            | 程序数据区                                        磁盘
+            |                                           输入
+            |                              输入缓冲区
+
+
+
+        文件指针
+
+            缓冲文件系统中，关键的概念是“文件类型指针”，简称“文件指针”。
+
+            每个被使用的文件都在内存中开辟了一个相应的文件信息区，用来存放文件的相关信息(如文件的名字，文件状态及
+            文件当前的位置等)。这些信息是保存在一个结构体变量中的。该结构体类型是有系统声明的，取名FILE
+
+            例如,VS2008编译环境提供的stdio.h头文件中有以下的文件类型申明:
+
+                struct _iobuf
+                {
+                    char* _ptr;
+                    int _cnt;
+                    char* _base;
+                    int _flag;
+                    int _file;
+                    int _charbuf;
+                    int _bufsiz;
+                    char* _tmpfname;
+                };
+
+                typedef struct _iobuf FILE;
+
+
+        
+
+
+
+        文件的打开和关闭
+            文件在读写之前应该先打开文件，在使用结束之后应该关闭文件
+
+            在编写程序的时候，在打开文件的同时，都会返回一个FILE*的指针变量指向该文件，也相当于建立了指针和文件的
+            关系。
+
+
+            ANSIC 规定使用fopen函数来打开文件，fclose来关闭文件
+                FILE * fopen ( const char * filename, const char * mode );
+                int fclose ( FILE* stream );
+
+
+
+            打开方式如下:
+            
+                文件使用方式         含义                                            如果指定文件不存在
+                “r”   ( 只读 ) |    为了输入数据，打开一个已经存在的文本文件            出错
+
+                “w”   ( 只写 ) |    为了输出数据，打开一个文本文件                       建立一个新的文件
+
+                “a”   ( 追加 ) |    向文本文件尾添加数据                               出错
+
+                “rb”  ( 只读 ) |    为了输入数据，打开一个二进制文件                    出错
+
+                “wb"  ( 只写 ) |    为了输出数据，打开一个二进制文件                     建立一个新的文件
+
+                “ab”  ( 追加 ) |    向一个二进制文件尾添加数据                         出错
+
+                “r+”  ( 读写 ) |    为了读和写，打开一个文本文件                       出错
+
+                “W+”  ( 读写 ) |    为了读和写，建议一个新的文件                        建立一个新的文件
+
+                “a+”  ( 读写 ) |    打开一个文件，在文件尾进行读写                      建立一个新的文件
+
+                “rb+” ( 读写 ) |    为了读和写打开一个二进制文件                       出错
+
+                “wb+” ( 读写 ) |    为了读和写，新建一个新的二进制文件                  建立一个新的文件
+
+                “ab+” ( 读写 ) |    打开一个二进制文件，在文件尾进行读和写              建立一个新的文件
+                ——————————————————————————————————————————————————————————————————————————————
+
+                        文件的顺序读写
+
+        功能                            函数名              适用于
+        字符输入函数                    fgetc               所有输入流
+        字符输出函数                    fputc               所有输入流
+        文本行输入函数                  fgets               所有输入流
+        文本行输出函数                  fputs               所有输入流
+        格式化输入函数                  fscanf              所有输入流
+        格式化输出函数                  fprintf             所有输入流
+        二进制输入                      fread               文件
+        二进制输出                      fwrite              文件
+
+            文件打开和关闭 代码：
+
+                int main()
+                {
+                    //打开文件test.txt
+                    //绝对路径
+                    // fopen( "D:\项目\VSWJ\ss\test-2023-2-17\test-2023-2-17")
+                    //相对路径
+                    // ..表示上一级路径
+                    // . 表示当前路径
+                    // fopen("..\\test.txt") 
+                    //fopen("test.txt")
+                    //绝对路径写法
+                    //fopen("D:\\项目\\VSWJ\ss\\test-2023-2-17\\test-2023-2-17\\test.txt", "r");//fopen("文件路径"，"打开方式")//如果
+
+                    FILE* pf= fopen("test.txt", "r");
+                    if (pf == NULL)
+                    {
+                        printf("%s\n", strerror(errno));//头文件#include <errno.h>
+                    }
+                    //打开成功
+                    //读文件
+
+                    //关闭文件
+                    fclose(pf);//关闭文件
+                    pf = NULL;//就像free一样
+                    return 0;
+                }
+
+
+
+
+
+        文件的顺序读写
+
+        功能                            函数名              适用于
+        字符输入函数                    fgetc               所有输入流
+        字符输出函数                    fputc               所有输入流
+        文本行输入函数                  fgets               所有输入流
+        文本行输出函数                  fputs               所有输入流
+        格式化输入函数                  fscanf              所有输入流
+        格式化输出函数                  fprintf             所有输入流
+        二进制输入                      fread               文件
+        二进制输出                      fwrite              文件
+        ——————————————————————————————————————————————————————————————————
+
+
+            //从键盘输入
+            //输出到屏幕
+            //键盘&屏幕都是外部设备
+            //
+            //键盘-标准输入设备 - stdin
+            //屏幕-标准输出设备 - stdout
+            //是一个程序默认打开的两个流设备
+            //stdin FILE*
+            //stdout FILE*
+            //stderr FILE*
+            int main()
+            {
+                int ch = fgetc(stdin);
+                fputc(ch, stdout);
+                return 0;
+            }
+
+
+            //输入
+            int main()
+            {
+                //打开文件
+                FILE* pfRead = fopen("test.txt", "r");//Read r 读
+                if (pfRead == NULL)
+                {
+                    printf("%s\n", strerror(errno));
+                    return 0;
+                }
+                //读文件
+                printf("%c",fgetc(pfRead));//b
+                printf("%c",fgetc(pfRead));//i
+                printf("%c",fgetc(pfRead));//t
+                //关闭文件
+                fclose(pfRead);
+                pfRead = NULL;
+                return 0;
+            }
+
+
+            //输出
+            /*int main()
+            {
+                //打开文件
+                FILE* pfWrite = fopen("test.txt", "w");//write w 写
+                if (pfWrite == NULL)
+                {
+                    printf("%s\n", strerror(errno));
+                    return 0;
+                }
+                //写文件
+                fputc('b', pfWrite);
+                fputc('i', pfWrite);
+                fputc('t', pfWrite);
+                //关闭文件
+                fclose(pfWrite);
+                pfWrite = NULL;//手动置成NULL; 空指针
+                return 0;
+            }*/
+
+
+
+            全部的写法：
+
+                //写文件
+                /*int main()
+                {
+                    FILE* pf = fopen("test.txt", "w");
+                    if (pf == NULL);
+                    {
+                        printf("%s\n", strerror(errno));
+                        return 0;
+                    }
+                    //写文件
+                    fputc('b',pf);//fputc(内容，地址);
+                    fputc('i', pf);
+                    fputc('c', pf);
+                    //关闭文件
+                    fclose(pf);
+                    pf = NULL;
+
+                    return 0;
+                }*/
+
+
+
+
+
+
+
+                /*int main()
+                {
+                    FILE* pf = fopen("test.txt", "r");
+                    if (pf == NULL)
+                    {
+                        printf("%s\n", strerror(errno));
+                    }
+                    //读文件
+                    int ch = fgetc(pf);//fgetc(去哪里读); 读了要返回来
+                    printf("%c", ch);//读第一个 b
+                    ch = fgetc(pf)
+                    printf("%c", pf);;//读第二个 i
+                    ch = fgetc(pf);
+                    printf("%c", ch);//读第二个 t
+                    //关闭文件
+                    fclose(pf);
+                    pf = NULL;
+                    return 0;
+                }*/
+
+
+
+
+
+
+
+
+                /*int main()
+                {
+                    char buf[1024] = { 0 };//读的文件放在哪里
+                    FILE* pf = fopen("test.txt", 'r');
+                    if (pf == NULL)
+                    {
+                        printf("%s\n", strerror(errno));
+                        return 0;
+                    }
+                    //读文件
+                    //数据的存储位置 最多读取几个字符
+                    fgets(buf, 1024, pf);//ftes(读的文件放在哪里，读几个字符，读哪个文件)
+                    //printf("%s", buf);//在读buf的时候他的里面本来就拥有一个换行所以不用加\n
+                    puts(buf);//天生打印完之后会换行
+
+                    fgets(buf, 1024, pf);//ftes(读的文件放在哪里，读几个字符，读哪个文件)
+                    puts(buf);
+                    //printf("%s", buf);//在读buf的时候他的里面本来就拥有一个换行所以不用加\n
+                    //如果文件里有两行的话 得写两次代码 相当于一组代码只能显示一行
+                    //关闭文件
+                    fclose(pf);
+                    pf = NULL;
+                    return 0;
+                }*/
+
+
+
+
+
+
+
+
+
+                /*int main()
+                {
+                    char buf[1024] = { 0 };//读的文件放在哪里
+                    FILE* pf = fopen("test.txt", 'w');
+                    if (pf == NULL)
+                    {
+                        printf("%s\n", strerror(errno));
+                        return 0;
+                    }
+                    //写文件
+                    fputs("hello\n",pf);//fputs(字符串，写到哪里去);
+                    fputs("world",pf);
+
+                    //关闭文件
+                    fclose(pf);
+                    pf = NULL;
+                    return 0;
+                }*/
+
+
+
+
+
+
+
+                /*int main()
+                {
+                    //从键盘读取一行文本信息
+                    char buf[1024] = { 0 };
+                    //fgets(buf,1024,stdin);//从标准输入读取 键盘读
+                    //fputs(buf, stdout);//输出到标准输出流
+
+                    gets(buf);
+                    puts(buf);
+                    return 0;
+                }*/
+
+
+
+
+
+
+
+                /*struct S
+                {
+                    int n;
+                    float score;
+                    char arr[10];
+                };
+
+                int main()
+                {
+                    struct S s = { 100,3.14f,"bit" };//不加f 默认是double 加f就是float
+                    FILE* pf = fopen("test.txt", "w");
+                    if (pf == NULL);
+                    {
+                        return 0;
+                    }
+                    //格式化的形式写文件
+                    fprintf(pf, "%d,%f,%s", s.n, s.score, s.arr);
+                    //关闭文件
+                    fclose(pf);
+                    pf = NULL;
+                    return 0;
+                }*/
+
+
+
+
+
+
+
+
+                /*struct S
+                {
+                    int n;
+                    float score;
+                    char arr[10];
+                };
+
+                int main()
+                {
+                    struct S s = { 0 };//不加f 默认是double 加f就是float
+                    FILE* pf = fopen("test.txt", "r");
+                    if (pf == NULL);
+                    {
+                        return 0;
+                    }
+                    //格式化的形式读文件
+                    fscanf(pf,"%d %f %s", &(s.n), &(s.score), &(s.arr));
+                    printf("%d %f %s", s.n, s.score, s.arr);
+                    //关闭文件
+                    fclose(pf);
+                    pf = NULL;
+                    return 0;
+                }*/
+
+
+
+
+
+
+
+
+
+
+                /*struct S
+                {
+                    int n;
+                    float score;
+                    char arr[10];
+                };
+
+                int main()
+                {
+                    struct S s = { 0 };//不加f 默认是double 加f就是float
+                    fscanf(stdin, "%d %f %s", &(s.n), &(s.score), &(s.arr));//stdin 标准输入
+                    fprintf(stdout, "%d,%.2f,%s", s.n, s.score, s.arr);//stdout 标准输出
+                    return 0;
+                }*/
+
+
+
+
+
+
+
+
+
+                /*struct S
+                {
+                    int n;
+                    float score;
+                    char arr[10];
+                };
+                int main()
+                {
+                    struct S s = { 100,3.14f,"abcdef" };
+                    char buf[1024] = { 0 };
+                    struct S tmp = { 0 };
+                    //把格式化的数据转换成字符串存储到buf
+                    sprintf(buf, "%d %f %s", s.n, s.score, s.arr);
+                    //printf("%s\n", buf);//打印上面的字符串
+                    //从buf中读取格式化的数据到tmp中
+                    sscanf(buf, "%d %f %s", &(tmp.n), &(tmp.score), &(tmp.arr));
+                    printf("%d %f %s\n", tmp.n, tmp.score, tmp.arr);
+                    return 0;
+                }*/
+
+
+
+
+
+
+
+                struct S
+                {
+                    char name[20];
+                    int age;
+                    double score;
+                };
+
+                int main()
+                {
+                    //struct S s = { "张三",20,55.6 };
+                    struct S tmp = { 0 };
+                    //FILE* pf = fopen("test.txt", "wb");
+                    FILE* pf = fopen("test.txt", "rb");
+                    if (pf == NULL)
+                    {
+                        return 0;
+                    }
+                    //二进制的形式写文件
+                    //fwrite(&s, sizeof(struct S), 1, pf);//fwrite(把谁写进去，写的元素有多大，写几个这样的，写到哪里去呢);
+                    //虽然以二进制的形式写进去 虽然肉眼看不到 但可以拿二进制读文件的时候可以看得到看得懂	
+
+                    //二进制的形式读文件
+                    fread(&tmp, sizeof(struct S), 1, pf);
+                    printf("%s %d %f", tmp.name, tmp.age, tmp.score);
+
+
+                    fclose(pf);
+                    pf = NULL;
+                    return 0;
+                }
+
+
+
+
+
+
+
+
+    面试题：
+    题目：
+    对比一组函数:
+        scanf/fscanf/sscanf 
+        printf/fprintf/sprintf
+        答案：
+        scanf/printf 是针对标准输入流/标准输出流的 格式化输入/输出语句
+
+        fscanf/fprintf 是针对所有输入流/所有输出流的 格式化输入/输出语句
+
+        sscanf/sprintf sscanf是从字符串中读取格式化的数据
+        -              sprintf是把格式化数据输出成 (存储到)字符串
+
+
+
+
+
+
+
+
+    文件的随机读写
+
+        fseek
+            根据文件指针的位置和偏移量来定位文件指针。
+
+            int fseek ( FILE * stream, long int offset, int origin );
+-                            pf             偏移量          文件指针的当前位置 
+-                                                          3个位置 [SEEK_CUR 文件指针的当前位置] 
+-                                                                  [SEEK_END文件的末尾位置] 
+-                                                                  [SEEK_SET文件起始位置]
+
+
+
+            int main()
+            {
+                FILE* pf = fopen("test.txt", "r");
+                if (pf == NULL)
+                {
+                    return 0;
+                }
+                //1.定位文件指针
+                fseek(pf,-2,SEEK_END);//fseek(偏移谁，偏移值，3个位置)3个位置 [SEEK_CUR 文件指针的当前位置] [SEEK_END文件的末尾位置] [SEEK_SET文件起始位置] 英文字母填进去
+
+                //2.读取文件
+                int ch = fgetc(pf);
+                printf("%c\n", ch);
+                //关闭文件
+                fclose(pf);
+                pf = NULL;
+                return 0;
+            }
+
+
+
+
+    ftell
+        返回文件指针相对于起始位置的偏移量
+
+        long int ftel1 ( FILE * stream );
+    例如：
+        int main()
+        {
+            FILE* pf = fopen("test.txt", "r");
+            if (pf == NULL)
+            {
+                return 0;
+            }
+            //1.定位文件指针
+            fseek(pf, -2, SEEK_END);//fseek(偏移谁，偏移值，3个位置)3个位置 [SEEK_CUR 文件指针的当前位置] [SEEK_END文件的末尾位置] [SEEK_SET文件起始位置] 英文字母填进去
+
+            int pos = ftell(pf);//想知文件指针当前的偏移量是几可以用ftell
+            printf("%d\n", pos);
+            //关闭文件
+            fclose(pf);
+            pf = NULL;
+            return 0;
+        }
+
+
+
+
+    rewind
+        让文件指针的位置回到文件的起始位置
+
+        void rewind ( FILE * stream );
+
+    例子：
+        int main()
+        {
+            FILE* pf = fopen("test.txt", "r");
+            if (pf == NULL)
+            {
+                return 0;
+            }
+            //1.定位文件指针
+            //fseek(pf, -2, SEEK_END);//fseek(偏移谁，偏移值，3个位置)3个位置 [SEEK_CUR 文件指针的当前位置] [SEEK_END文件的末尾位置] [SEEK_SET文件起始位置] 英文字母填进去
+            int ch = fgetc(pf);
+            printf("%c\n", ch);
+            //int pos = ftell(pf);//想知文件指针当前的偏移量是几可以用ftell
+            //	printf("%d\n", pos);
+
+            rewind(pf);
+            ch = fgetc(pf);
+            printf("%c\n", ch);
+            fgetc(pf);
+            //关闭文件
+            fclose(pf);
+            pf = NULL;
+            return 0;
+        }
+
+
+
+
+
+
+    
+
+
+
+文件结束判定
+    被错误使用的feof
+
+    牢记:在文件读取过程中，不能用feof函数的返回值直接用来判断文件的是否结束
+    而是应用于当文件读取结束的时候，判断是读取失败结束，还是遇到文件尾结束
+
+    1.文本文件读取是否结束，判断返回值是否为EOF (fgetc)，或者NULL( fgets)
+
+    例如:
+         fgetc判断是否为EOF.
+         fgets判断返回值是否为NULL.
+
+    2.二进制文件的读取结束判断，判断返回值是否小于实际要读的个数
+
+    例如:
+         fread判断返回值是否小于实际要读的个数。
+
+    正确的使用:
+
+        int main()
+        {
+            //strerror - 把错误码对应的错误信息的字符串地址返回
+            //printf("%s\n", strerror(errno));
+            //perror
+            FILE* pf = fopen("test2.txt", "r");
+            if (pf == NULL)
+            {
+                perror("open file test2.txt");//比strerror方便多了
+                return 0;
+            }
+            //读文件
+            int ch = 0;
+            while (ch=fgetc(pf)!=EOF)
+            {
+                putchar(ch);//打印出来
+            }
+            if (ferror(pf))
+            {
+                printf("error\n");
+            }
+            else if (feof(pf))
+            {
+                printf("end of\n");
+            }
+            //关闭文件
+            fclose(pf);
+            pf = NULL;
+            return 0;
+        }
+
+    正确使用2：
+        int main(void)
+        {
+            int c;// 注意：int，非char，要求处理EOF
+            FILE* fp = fopen("test.txt", "r");
+            if (!fp)
+            {
+                perror("File opening failed");
+                return EXIT_FAILURE;
+            }
+            //fgetc 当读取失败的时候或者遇到文件结束的时候，都会返回EOF
+            while ((c = fgetc(fp)) != EOF)//标准C I/O读取文件循环
+            {
+                putchar(c);
+            }
+            //判断是什么原因结束的
+            if (ferror(fp))
+                puts("I/O error when reading");
+            else if (feof(fp))
+                puts("End of file reached successfully");
+            //关闭文件
+            fclose(fp);
+        }
+
+
+
+    二进制文件的例子:
+
+        enum
+        {
+            SIZE = 5
+        };
+
+        int main()
+        {
+            double a[SIZE] = { 1.0,2.0,3.0,4.0,5.0 };
+            double b = 0.0;
+            size_t ret_code = 0;
+            FILE* fp = fopen("test.bin", "wb");//必须用二进制模式
+            fwrite(a, sizeof(*a), SIZE, fp);//写double的数组
+            fclose(fp);
+
+            fp = fopen("test.bin", "rb");
+            //读double数组
+            while ((ret_code = fread(&b, sizeof(double), 1, fp)) >= 1)
+            {
+                printf("%lf\n", b);
+            }
+            if(feof(fp))
+                printf("Error reading test.bin: unexpected end of file n");
+            else if (ferror(fp))
+            {
+                perror("Error reading test.bin");
+            }
+            fclose(fp);
+            fp = NULL;
+            return 0;
+        }
+
+        
+        参考链接:https://zh.cppreference.com/w/c
+
+        本章完
+
+

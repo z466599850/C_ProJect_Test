@@ -1,0 +1,1159 @@
+ · 写c代码
+1.创建项目 空项目
+2.视图打开解决问题方案 源文件 右击源文件 空项目 .c格式
+3.在代码第一行输入      #define _CRT_SECURE_NO_WARNINGS 1  这个必须要输入
+这个代码要在第三行输入  #include <stdio.h> 这个必须要输入 
+4. 用strlen的时候要加上头文件 #include <string.h>
+
+
+·注释：
+1.代码中有不需要的代码可以直接删除，也可以直接注释
+2.代码中有些代码比较难懂，可以加一下注释文字
+
+·注释有两种风格：
+ C语言风格的注释 /*xxxxxxxxxx*/ 缺陷：不能嵌套注释
+ C++风格的注释 //xxxxxxxxxxxx  可以注释一行也可以注释多行
+
+
+
+
+
+ · c代码
+ .c -源文件
+ .h -头文件 head
+ 3.写代码 ！！！！！！！！！
+
+
+
+
+     //库函数-c语言本身提供我们使用的函数
+     //别人的东西 打招呼
+     //#include 包含的意思 就是我跟你说一声哦我要用你了
+     //包含一个叫 <stdio.h>
+     //
+ #include <stdio.h> //这个必须写！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+int main()  // 主函数-程序的入口-main函数有且仅有一个
+{
+	printf("hehe\n");    // printf("内容\n") 就是把里面的东西打印到屏幕上面
+	return 0;           //return 就是返回值的意思  返回到 0
+}
+
+
+
+
+
+//int是整型的意思
+//main前面的int表示main函数调用返回一个整型值
+int main()
+{
+	return 0; // 返回 0
+}
+
+
+
+main是主函数-程序的入口并且只能有一个.
+main前面的int表示main函数调用返回一个整形值.
+printf：在屏幕上打印一个函数.
+stdio.h：标准输入输出.
+char：字符数据类型 1字节
+     short：短整型 2字节
+
+     int：整形 4字节
+
+     long：长整型 4字节
+
+     long long：更长的整形 8字节
+
+     float：单精度浮点型  指小数后6位 4字节 运行报错可以在数字后加个f
+
+     double：双精度浮点型  指小数点后6位的位数更多 8字节
+
+6.“  ”表示字符.
+
+7.\n：换行.
+
+8.%d：打印整形
+
+   %c：打印字符
+
+   %f：打印小数
+
+   %p：以地址形式打印
+
+   %x：打印16进制数字
+
+   %o：打印8进制数字
+
+   %lf：打印双精度小数
+
+9.sizeof：什么什么 的大小
+
+10.全局变量：定义在代码块{}之内的变量
+
+     局部变量：定义在代码块{}之内的变量
+
+     名字相同的全局变量和局部变量可以同时存在，优先显示局部变量，但是局部变量和全局变量不建议取相同名字（局部变量只能用于所在的代码块{}内）
+
+11.scanf：输入数据；输入函数
+
+12.&：取地址符号
+
+
+ · 数据类型：
+  char   //字符数据类型
+  short  //短整型
+  int  //整型
+  long     //长整型
+  long long  //更长整型
+  float     //单精度浮点数
+  double   //双精度浮点数
+      20 整型
+      55.5 小数 在c语言里叫浮点数
+  char-字符类型
+  %d - 打印整型
+  %c - 打印字符
+  %s - 打印字符串
+  %f - 打印浮点数字-打小数
+  %p - 以地址的形式打印 打印地址的时候用这个
+  %x - 打印16进制数字
+  %o ...
+
+
+%d 有符号10进制整数
+%i 有符号10进制整数
+%o 无符号8进制整数
+%u 无符号10进制整数
+%x 无符号的16进制数字，并以小写abcdef表示
+%X 无符号的16进制数字，并以大写ABCDEF表示
+%F/f 浮点数
+%E/e 用科学表示格式的浮点数
+%g使用%f和%e表示中的总的位数表示最短的来表示浮点数 G 同g格式，但表示为指数
+%c 单个字符
+%s 字符串
+————————————————
+
+
+
+
+
+int main()
+{
+	//char ch = 'A'; //内存
+	//printf("%c\n", ch); //%c- 打印字符格式的数据
+	// short int - 短整型
+	// int - 整型
+	//int age = 20;
+	// printf("%d\n", age); //%d -- 打印整型十进制数据
+	//long num = 100;
+	//printf("%d\n", num); 
+	//float f = 5.0;
+	//printf("%f\n", f);
+	//double d = 3.14;
+	//printf("%lf\n", d);
+
+	return 0; 
+
+}
+
+！！！！！！！！！
+int main()
+{         后面的数字代表字节   一个字节等于8个比特位   比特位代表的是 0 1 二进制                
+	printf("%d\n", sizeof(char));// 1    8个比特位
+	printf("%d\n", sizeof(short int));// 2  16个比特位  
+	printf("%d\n", sizeof(int));// 4    32个比特位 0-65535
+	printf("%d\n", sizeof(long));// 4  也可以是4/8   32个比特位或者是64个比特位
+	printf("%d\n", sizeof(long long));// 8  64个比特位
+	printf("%d\n", sizeof(float));// 4   32个比特位
+	printf("%d\n", sizeof(double));// 8   64个比特位
+}
+ · 字节 ：
+   计算机中单位
+     bit - 比特位     一个字节等于 8个比特位
+     byte - 字节
+     kb -   
+     mb - 
+     gb - 
+     tb - 
+     pb - 
+
+
+     int main()
+{
+	short age = 20; //向内存申请2个字节=16bit位 用来存放20
+	float weight = 95.6f; //加个f是让系统知道 这是单精度浮点数 向内存申请4个字节，存放小数
+	return 0;
+}
+
+
+
+
+
+
+
+ · 变量：
+ 变量的分类： 
+     局部变量
+     全局变量
+     int num2 = 2; //全局变量-定义在({ })之外的变量 就是不在这两个括号之内
+int main()
+{
+	int num1 = 10; // 局部变量- 定义在代码块({ })内部 就是在这两个括号之内的叫局部变量
+	return 0;
+}
+
+
+int a = 100;
+int main()
+{
+	int a = 10;
+	//局部变量和全局变量的名字建议不要相同-容易误会，产生bug
+	//当局部变量和全局变量的名字相同的时候，局部变量优先显示 ！！！！！！！！！！！！！！！！！！！！
+	printf("%d\n", a);
+	
+}
+
+
+
+
+
+
+
+
+
+ · 计算两个数的和：
+
+int main()
+{
+	//计算两个数的和
+	int num1 = 0;
+	int num2 = 0;
+	int sum = 0;
+	//输入数据-使用输入函数scanf
+	scanf_s("%d%d", &num1, &num2);;// & 代表取地址符号 //用scanf出不来 要加上_s 才能正常运行 具体为什么我也不知道
+	  scanf 用不了是因为：
+	     scanf是C语言提供的
+		 scanf_s不是标准c语言提供的是，VS编译器提供的 如果用这个_s就会在其他平台上用不了 不建议使用
+		 解决问题：
+		   在代码第一行输入 #define _CRT_SECURE_NO_WARNINGS 1
+	//scanf
+	//strcpy
+	//strlen
+	//strcat
+	//...
+	//不安全的
+	// 只要加上这句话 #define _CRT_SECURE_NO_WARNINGS 1  统统忽略掉 他就不会在意这些警告了  
+	sum = num1 + num2;
+	printf("sum = %d\n", sum);
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+ · 变量的作用域和生命周期：
+  局部变量的作用域：
+int main()
+{
+	{
+		//局部变量的作用域 意思就是 哪个能用 就是作用域
+		int num = 0;
+		printf("num = %d\n", num);
+	}
+
+	return 0;
+}
+
+
+
+ ·  全局变量的作用域：
+   int main()
+{
+	//未声明的标识符
+	//声明extern 外部符号的 这样哪怕不在一个 文件里 也能跑起来
+	extern int g_val;
+
+	printf("g_val = %d\n", g_val);
+	return 0;
+}
+
+//全局变量在哪里都能使用 只要不在两个括号里就行
+int global = 2020;
+void test()
+{
+	printf("test()--  %d\n", global);
+}
+
+int main()
+{
+	test();
+	printf("%d\n", global);
+	return 0;
+}
+
+
+
+
+ · 变量的生命周期
+  局部变量的生命周期：
+  int main()                  意思是只要出了这个括号 他的生命周期就用不了 生命就结束了
+{ 
+	{
+		int a = 10;
+		printf("a = %d\n", a);//ok
+	}
+	printf("a = %d\n", a);//error  //这里用不了了 因为已经出了括号了 生命周期结束了
+	return 0;
+}
+   全局变量的生命周期是：是整个程序的生命周期
+
+
+
+
+
+
+
+
+ · 常量：
+//int main()
+//{
+//	//const - 常属性
+//	const int n = 10; //n是变量，但是又有常属性，所以我们说n是常变量
+//	/*int arr[n] = { 0 };*/
+//	n = 20;  
+//
+//
+//	//2.const修饰的常变量
+//	//const int num = 4;   //加了const 他就变不了了 意思就是 他是一个变量 而const是一个常 他原来是变量加上const就是常变量了
+//	//printf("%d\n", num);
+//	//num = 8;
+//	//printf("%d\n", num);
+//	//
+//	//3;//1.字面常量
+//	//100;
+//	//3.14;
+//	return 0;
+//}
+
+
+
+////3. #define 定义的标识符常量
+//#define MAX 10
+//int main()
+//{
+//	int arr[MAX] = { 0 };
+//	printf("%d\n", MAX);
+//	return 0;
+//}
+
+
+
+//4.枚举常量
+// 性别：男，女，保密 
+// 三原色：红、黄、蓝
+// 星期：1，2，3.4，5，6，7
+ 
+// 枚举关键 - enum
+
+//enum Color
+//{
+//	RED,
+//	YELLOW,
+//	BLUE
+//};
+//
+//int main()
+//{
+//	enum Color color = RED;
+//	return 0;
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+enum Sex
+{
+	MALE,
+	FAMALE,    //在这个大括号里的叫枚举常量
+	SECRET
+};
+//MALE,FAMALE,SECRET - 枚举常量
+int main()
+{
+	//enum Sex s = FAMALE:
+	printf("%d\n", MALE);//0
+	printf("%d\n", FAMALE);//1
+	printf("%d\n", SECRET);//2
+}
+
+
+
+
+ · 字符串：
+
+   "hello bit.\n";
+
+   这种由双引号( Double Quote )引起来的一串字符称为字符串字面值( String Literal)，或者简称字
+符串。
+   strlen(char*）函数求的是字符串的实际长度，它求得方法是从开始到遇到第一个'\0'，
+如果你只定义了一个字符型数组但没有给它赋初值，这个结果是不定的，它会从aa首地址一直找下去，直到遇到'\0'停止。
+
+注:字符串的结束标志是一个 \0 的转义字符。在计算字符长度的时候 \0 是结束标志，不算作字符串内容
+
+
+
+int main()
+{
+	//字符串的结束标志：'\0'
+	//"abcdef"; f后面隐藏了一个\0
+	// '\0'- 转义字符 - ASCII码值对应的是 0
+	// 0 -> 数字0
+	// '0' -> ASCII码值对应的是 48
+	// 'a' 'b' 'c' '0' '1' '2' '3'
+	return 0;
+}
+
+
+int main()
+{
+	"abcdefg";
+	"hello bit";
+	"";//空字符
+	return 0;
+}
+
+
+
+
+int main()
+{
+//	数据在计算机上存储的时候，存储的是2进制
+//	 #av$
+//	 a - 97 那97代表的就是a   
+//	 A - 65
+//	 ...
+//	 ASCII 编码
+//	 ASCII 码值
+	char arr1[] = "abc";//数组
+//	//先按F10 在点调试 窗口 然后就会发现 arr1多出了个0  arr2 没有0
+//	//"abc" -- 'a','b','c' '\0' -- '\0'字符串的结束标志 字符串 默默偷偷放了个0
+	char arr2[] = { 'a','b','c','\0'};
+//	//'\0' - 0
+//	//'a' - 97 ASCII码
+//	//'a''b''c'
+	printf("%s\n", arr1); //打印字符串用 %s
+	printf("%s\n", arr2);
+	return 0;
+}
+
+
+
+
+
+int main()
+{
+	char arr1[] = "abc";//3
+	// arr1的内容：a b c \0 
+	char arr2[] = { 'a','b','c','\0'}; //随机值 跑出来是42 因为他找找找啊到了42才找到了\0  
+	//要是放\0的话就是3就结束了
+	//没有放\0 arr2的内容：a b c 未知未知... \0  \0只是结束标志
+	printf("%d\n", strlen(arr1));//strlen - string length- 计算字符串的长度
+	printf("%d\n", strlen(arr2));
+}
+
+
+ · 转义字符：
+
+把原来的字符转变了
+
+
+int main()
+{
+	printf("abc\n"); //不加\n就会显示abc请按任意键继续
+					 //加\n 请按任意键继续就在下一行了 
+                    //\n换行的意思
+	return 0;
+}
+
+
+
+
+
+
+int main()
+{
+	printf("c:\\text\\32\\test.c");
+	printf("%c\n", '\''); //转义字符字符
+	printf("%s\n", "\""); //转义字符
+	//\t - 水平制表符 
+	//要把他转成普通的就在\t前面加个\ 因为不加的话他是一个水平制表符 加一个\ 就变回普通的了 就是转义字符的意思
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+	printf("%c\n", '\x61');
+	//x61十六进制转换为十进制 ->97 在ASCII码表对应的是 a 所以跑出来的是a
+	//printf("%d\n", strlen("c:\text\32\test.c"));
+	// //strrlen 字符串的长度 c : \t e x t \32 \t e s t . c
+	//\32 -- 32是2个8进制数字
+	//32作为八进制代表的那个十进制数字，作为ASCII码值，对应的字符
+	//32 -- > 10进制 26 ->作为ASCII码值代表的字符
+	//printf("%c\n", '\132');
+	//132八进制转换为10进制 90 90对应的ASCII码值是 Z 所以跑出来的是Z
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+· 选择语句：
+   if 相当于如果的意思
+int main()
+{
+	int input = 0;
+	printf("加入比特\n");
+	printf("你要好好学习吗?(1/0)>:");
+	scanf("%d", &input);
+	//scanf就是输入函数，接收你在控制台输入的东西
+	if (input == 1) //if 相当于如果的意思  如果你选1 就是好offer 
+		//在C语言中如果是一个等号的话相当于是赋值(把右边的值赋值给左边 例如：a = 3 是赋值3给a)，两个等号才是等于
+		//关系运算符==，判断前后值是否相等，成立为true，不成立为false
+	    printf("好offer\n");
+	else
+		printf("卖红薯\n");
+	return 0;
+}
+
+
+
+
+
+
+ · 循环语句
+
+ 1.while语句 
+ 2.for语句 ((后期讲))
+ 3.do ... while语句((后期讲))
+
+
+
+
+ int main()
+{
+	int line = 0;//line代表行
+	printf("加入比特\n");
+	while (line <= 20000)//while循环语句
+	{
+		printf("敲两万行代码 %d\n",line);//加上%d  line就是出现行数
+		line++;// line++就是line=line+1 ++表示在原来基础上+1
+	}
+	if (line>=20000) 
+	printf("好offer\n");
+	return 0;
+}
+
+
+
+
+
+ · 函数
+
+
+ int Add(int x, int y)
+{
+	int z = x + y;
+	return z;
+}
+
+int main()
+{
+	//计算两个数的和   自定义函数 设计
+	//库函数
+	int num1 = 10;
+	int num2 = 20;
+	int sum = 0;
+	int a = 100;
+	int b = 200;
+	sum = Add(num1, num2);
+	sum = Add(a, b);
+	sum = Add(2, 3);
+	printf("sum = %d\n", sum);
+	return 0;
+}
+
+
+
+
+ · 数组：
+ 要存储1-10的数字，怎么存储？
+ C语言中给了数组的定义：一组相同类型元素的集合
+                       数组的大小需要常量
+                       数组的下标是从0开始
+					   数组如果初始化，可以不指定数组的大小
+				注意：
+				int n = 10; int arr[n]={0}; 数组的大小要用常量来表示 n是变量所以不行 这个写法是错误的
+ 数组定义
+
+      in arr[10] = {1,2,3,4,5,6,7,8,9,10}; //定义一个整型数组，最多放十个元素
+
+
+
+
+int main()
+{
+	int arr[10] = { 1,2,3.4,5,6,7,8,9,10 };
+	//0-9
+	int i = 0;
+	while (i < 10)
+	{
+		printf("%d", i);
+		i++;
+	}
+	//printf("%d\n", arr[4]); //打印出来的是5  下标的方式访问元素 下标是从0开始 所以 0对应的就是1 1对应的是2
+	// 怎么访问数组呢 用arr[下标]；
+	//char ch[20];
+	//float arr2[5];
+	return 0;
+}
+
+
+
+
+ · 操作符
+ +
+ -
+ *
+ / 除   例如int a = 5/2； 结果是 2  因为int只取整数 
+ % 取模 例如int a = 5/2； 结果是1   因为取的是余数
+
+
+
+int main()
+{
+	//移(2进制)位操作符
+	// << 左移
+	// >> 右移
+	int a = 1;
+	//整型1占四个字节-32bit位
+	//000000000000000000000000000001
+	int b = a << 2;
+	//左丢右补0  意思是 左丢了2位 右边就补两个0
+	//然后 000000000000000000000000000100 二进制在转换十进制就是1*2^2 等于4
+	printf("%d\n", a);
+	printf("%d\n", b);
+	return 0;
+}
+
+
+
+·按位运算
+1.按位与 2.按位或 3.按位异或
+
+     口诀 与：全一则一    或：有一则一    异或：有零或一，全一或零，则零
+
+
+int main()
+{
+	int a = 3;
+	int b = 5;
+	//int c = a & b;//按位与
+	//int c = a | b;//按位或
+	//int c = a ^ b;//按位异或
+	//口诀 与：全一则一    或：有一则一    异或：有零或一，全一或零，则零
+	//    011      011        011
+	//    101      101        101
+	//与：001  或：111  异或：110
+   //结果：1        7          6
+	printf("%d\n", c);
+	return 0;
+}
+
+
+
+
+ · 赋值操作符
+ 
+
+ int main()
+{
+	int a = 10;
+	a = 20;//= 赋值  == 判断相等
+	a = a + 10;//1  1-2意思相同
+	a += 10;//2
+	a = a - 20;//1
+	a -= 20;//2
+	a = a & 2;//1
+	a &= 2;//2
+	//复合赋值符
+	// += -= *= /= %= >>= <<= &= |= ^=
+
+	printf("%d\n", a);
+	return 0;
+}
+
+
+
+· 单目操作符
+
+
+
+//单目操作符
+//双目操作符
+//三目操作符
+
+！逻辑反操作 -负值
+
+int main()
+{
+	//int a = 10;
+	//int b = 20;
+	//a + b;//+ 是（操作符） + 号的左右 都有值 所以叫双目操作符
+	//c语言中我们表示真假
+	//0-假
+	//非0-真
+	int a = 0;
+	//int a = -2;
+	//int b = -a;
+	//int c = +3;//+正号都会省略
+	printf("%d\n", a);
+	printf("%d\n", !a);// !的意思是真的变成假的  假的变成真的 默认为1
+	return 0;
+}
+
+
+(类型) 强制类型转换
+
+int main()
+{
+	int a = (double)3.14;
+	printf("a = %d\n",a);
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+	int arr[10] = { 0 };//10个整型元素的数组
+	int sz = 0; 
+	//int是整数型的标志但整数型占4个字节 所以=4    //10*sizeof(int) = 40 
+	printf("%d\n", sizeof(arr));       //arr有10个int类型的，一个int类型是4byte，所以sizeof(arr)=40个byte
+	//                                   ，求长度：总（10个int各有4byte）除以个（一个int，有4byte）等于10*4/1*4=10
+	//计算数组的元素个数
+	//个数 = 数组总大小/每个元素的大校
+	sz = sizeof(arr) / sizeof(arr[0]); //我有n个苹果/一个红色的苹果=n个==10/1=10（这里数的是几个int））
+	printf("sz=%d\n", sz);
+	return 0;
+	//int a = 10;
+	////sizeof 计算的是变量/类型所占空间的大小，单位是字节
+	//printf("%d\n", sizeof(a));//4  //int是整数型的标志但整数型占4个字节 所以=4
+	//printf("%d\n", sizeof(int));
+	//printf("%d\n", sizeof a); //他可以因为他是变量名
+	//printf("%d\n", sizeof int);//他不行 因为他是整型
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sizeof 操作数的类型长度(以字节位单位)
+
+
+int main()
+{
+	int a = 10; //因为已经给a定义为int 整型 整型就是四个字节  这个代码写的就已经是求整型
+	int arr[] = { 1,2,3,4,5,6 };
+	printf("%d\n", sizeof(a));                               //4 整型int的字符是4，所以这里输出是4
+	printf("%d\n", sizeof(int));                            //4  sizeof可以计算一个类型或者变量的大小
+	printf("%d\n", sizeof a);                              //4   因为已经给a定义为int 整型 整型就是四个字节
+	printf("%d\n", sizeof(arr[0]));                       //4    因为已经给arr定义为int 整型 整型就是四个字节
+	printf("%d\n", sizeof(arr));                         //24    计算数组的大小 单位是字节 因为 1个整型代表4个字节 一共个6个数 4*6=24
+	printf("%d\n", sizeof(arr) / sizeof(arr[0]));       //6      因为默认下标从0开始，也就是说1所在的位置是0
+}
+
+
+~ 符号 对一个数的二进制按位取反
+
+int main()
+{
+	int a = 0;//4个字节，32个bit位
+	int b = ~a;//b是有符号的整型
+	// ~ - 按（2进制）位取反
+	//00000000000000000000000000000000
+	//11111111111111111111111111111111
+	//原码——>反码——>补码
+	// 原码——>反码就是除了符号位第一位不变 其他的都要倒过来——> +1 补码
+	// 补码-1得到反码 反码按位取反 到原码 这个要  补码-->反码-->原码
+	//负数在内存中存储的时候，存储的是二进制的补码
+	//11111111111111111111111111111111
+	//11111111111111111111111111111110
+	//10000000000000000000000000000001
+	//开头的第一位是符号位 0是正数 1是负数  符号位不能动哦！！！！！！！！
+	printf("%d\n", b);//所以得到的是-1
+	return 0;
+}
+
+
+前置++ 后置++ 前置-- 后置--
+
+int main()
+{
+	int a = 10;
+	//int b = a++//后置++ ，先使用，后++;
+	//int b = ++a;//前置++ ，先++，后使用
+	//int b = a--;//后置--，先使用，后--;
+	//int b = --a;//前置-- ，先--，后使用
+	//a++ ++a简单的理解： a++是先赋值然后加1 ++a是先加1后赋值
+	
+	//a-- --a简单的理解： a--是先减1后赋值，--a是先减1后赋值
+	printf("a = %d b = %d\n", a, b);
+	return 0;
+}
+
+
+
+·关系操作符
+>   大于
+>=  大于等于  
+<   小于
+<=  小于等于
+!=  用于测试"不相等"
+==  用于测试"相等"
+=   "一个等号叫赋值操作符"
+
+
+
+·逻辑与 逻辑或
+   &&     ||
+
+
+ int main()
+{
+	//真 - 非0
+	//假 - 0
+	//&& - 逻辑与 只要里面有一个0 那就是假 除非里面都不是0 那他就会显示真
+	//|| - 逻辑或 只要里面有一个真 那就是真 
+	int a = 3;
+	int b = 5;
+	//int c = a && b;
+	int c = a || b;
+	printf("c = %d\n", c);
+	return 0;
+}
+
+
+
+·三目运算符
+(exp1?exp2:exp3);
+
+int  main()
+{
+	int a = 10;
+	int b = 20;
+	int max = 0;
+	max = (a > b ? a : b);
+	//三目运算符
+	//exp1为真，执行exp2，如果exp1为假则执行exp3
+	printf("max = %d\n", max);
+	return 0;
+}
+
+
+常见关键字：
+
+auto      break     case      char      const      continue    defauult     do           double     else         enum
+extern    float     for       goto      if         int         long         register     return     short        signed 
+sizeof    static    struct    switch    typedef    union       union        unsigned     void       volatile     while
+
+
+
+
+
+auto：局部变量- 自动变量 一般不写
+break：用于停止循环
+
+
+
+
+extern：引入外部符号 声明外部函数
+static：修饰局部变量
+
+//static 修饰局部变量
+//局部变量的生命周期变长
+//static 修饰全局变量
+//改变了变量的作用域 - 让静态的全局变量只能在自己所在的源文件内部使用
+//出了源文件就没法使用了
+//static修饰函数
+//也是改变了函数的作用域-不准确
+//static 修饰函数改变了函数的链接属性
+//外部链接属性 ->内部链接属性
+
+//声明外部函数
+/*extern int Add(int, int);
+
+int main()
+{
+	int a = 10;
+	int b = 20;
+	int sum = Add(a, b);
+	printf("sum = %d\n",sum);
+	return 0;
+}*/
+
+
+/*int main()
+{
+	//extern - 声明外部符号的
+	extern int g_val;
+	printf("g_val = %d\n", g_val);
+	return 0;
+}*/
+
+
+
+
+for：for循环
+goto：goto语句
+if：if语句
+register：寄存器关键字
+return：返回值
+char：字符数据类型
+short：短整型
+int：整型
+long：长整型
+long long：更长整型
+float：单精度浮点数
+double：双精度浮点数
+signed：有符号的
+
+·unsigned：无符号的
+int main()
+{
+	//int float;/err
+	typedef unsigned int u_int;
+	unsigned int num = 20;
+	u_int num2 = -20;
+	printf("%d\n", num2);
+	return 0;
+}
+
+sizeof：计算大小的
+
+static：静态的  在c语言中：是用来修饰变量和函数的 static:修饰局部变量，局部变量 生命周期变长
+在修饰变量的时候，static 修饰的静态局部变量只执行初始化一次，而且延长了局部变量的生命周期，直到程序运行结束以后才释放。
+
+
+struct：结构体关键字
+switch：switch语句
+typedef：顾名思义是类型定义，这里应该理解为类型重命名
+union：联合体或者叫共用体
+void：无或者空
+volatile：用的比较少c语言段位的关键词
+while：while循环
+
+
+
+#defined 定义标识符常量宏
+
+
+/*int Max(int x, int y)
+{
+	if (x > y)
+		return x;
+	else
+		return y;
+}
+//宏的定义
+#define Max(X,Y) (X>Y?X:Y)
+
+int main()
+{
+	//int a =MAX;
+	int a = 10;
+	int b = 20;
+	//函数
+	int max = Max(a, b);
+	printf("max = %d\n", max);
+	//宏的方式
+	max = Max(a, b);
+	printf("max = %d\n", max);
+	return 0;
+}*/
+
+
+
+
+
+·指针变量
+
+
+内存是电脑上特别重要的存储器，计算机中所有程序的运行都是在内存中进行的
+所以为了有效的使用内存，就把内存划分成一个个小的内存单元，每个内存单元的大小是1个字节
+为了能够有效的访问到内存的每个单元，就给内存单元进行了编号，这些编号被称为该内存单元的地址.
+ 指针大小在32位平台是4个字节 在64位平台是8个字节
+
+
+
+int main()
+{
+	int a = 10;//4个字节
+	int* p = &a;//取地址
+	// p是指针变量 int* 是p的类型 &a 是取a的地址
+	//printf("%p\n", &a);
+	//printf("%p\n", p);
+	*p = 20;//* - 解引用操作符
+	printf("a = %d\n", a);
+
+	//有一种变量是用来存放地址的-指针变量
+	//printf("%p\n", &a);
+	return 0;
+}
+
+
+
+
+
+/*int main()
+{
+	printf("%d\n", sizeof(char*));
+	printf("%d\n", sizeof(short*));
+	printf("%d\n", sizeof(int*));
+	printf("%d\n", sizeof(double*));
+
+	//double d = 3.14;
+	//double* pd = &d;//32-4   64-8
+	//printf("%d\n", sizeof(pd));
+	//*pd = 5.5;
+	//printf("%d\n", d);
+	//printf("%d\n", *pd);
+
+	//int a = 10;//申请了4个字节的空间
+	//printf("%p\n", &a);
+	//int* p = &a;//p是一个变量-指针变量
+	//printf("%p\n", p);
+	//*p = 20;//* - 解引用操作符/间接访问操作符
+	//printf("a = %d\n",a);
+	return 0;
+}*/
+
+
+
+
+
+
+·结构体
+
+
+#define _CRT_SECURE_NO_WARNINGS 1
+
+#include <stdio.h>
+#include <string.h>
+
+//结构体
+//char int double ....
+//人 =3.14
+//'w'
+//书 - 复杂对象
+//
+//名字+身高+年龄+身份号码+....
+//书名+作者+出版社+定价+书号....
+//复杂对象 -- 结构体- 我们自己创造出来的
+
+//创建一个结构体类型
+struct Book//Yo是随便取得名字
+{
+	char name[20];//C语言程序设计 20是数组中的元素个数 最长20个字的名称
+	//20是数组的大小，具体映射可命名的书名的长度。
+	short price;//55
+};
+
+int main()
+{
+	//利用结构体类型-创建一个该类型的结果体变量
+	struct Book b1 = { "C语言程序设计",55 };// struct 是结果体关键字  o是随便取得变量名 
+	strcpy(b1.name,"c++");//改名字
+	//strcpy-string copy -字符串拷贝-库函数-需要引用头文件 #include<string.h>
+	printf("%s\n", b1.name);
+	////b1.price = 15;//改名字
+	// //printf("修改后的价格：%d\n", b1.price);
+	// // 变量的定义就是可以随便改，他是可变的
+	
+
+	//struct Book* pb = &b1;
+	//利用pb打印出我的书名和价格
+	//.       结构体变量.成员
+	//->      结构体指针->成员
+
+	//printf("%s\n", pb->name);
+	//printf("%d\n", pb->price);
+
+	/*pintf("%s\n", (*pb).name)
+	*和.都是运算符有优先级，.的优先级非常高，考虑顺序,加括号确保先*再.
+	printf("%d\n",(*pb).price)*/
+
+	//printf("书名：%s\n", b1.name);//%s取得是字符串
+	//%s  对应的是打印数组，就和p，d 一样对应打印的东西不同而已
+	//printf("价格：%d\n", b1.price);
+	//b1.price = 15;
+	// 变量的定义就是可以随便改，他是可变的
+	//printf("修改后的价格：%d\n", b1.price);
+	return 0;
+}
+
+
+

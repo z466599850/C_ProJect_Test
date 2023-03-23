@@ -1,0 +1,4 @@
+﻿  test.c
+D:\项目\VSWJ\ss\test_2023_3_23\test_2023_3_23\test.c(8,12): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“char *”
+D:\项目\VSWJ\ss\test_2023_3_23\test_2023_3_23\test.c(8,12): warning C4313: "printf": 格式字符串中的 "%d" 与类型为 "char *" 的参数 1 冲突
+  test_2023_3_23.vcxproj -> D:\项目\VSWJ\ss\test_2023_3_23\x64\Debug\test_2023_3_23.exe
